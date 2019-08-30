@@ -26,12 +26,11 @@ class HomeController extends HttpController {
 
       const { title, content } = ctx.request.body;
 
-      // const postsInstance = new ctx.model.Posts({ // egg 会自动转为大驼峰 posts --> Posts
-      //   title, content,
-      // });
-      // const res = await postsInstance.save();
-      const res = await ctx.service.posts.create({ title, content });
+      const postsInstance = new ctx.model.Posts({ // egg 会自动转为大驼峰 posts --> Posts
+        title, content,
+      });
 
+      const res = await postsInstance.save();
       await this.success(res);
     } catch (error) {
       await this.fail(error);
@@ -44,8 +43,7 @@ class HomeController extends HttpController {
     // console.log('----', ctx.csrf);
     // 1. 查询数据
     try {
-      // const res = await ctx.model.Posts.find();
-      const res = await ctx.service.posts.index();
+      const res = await ctx.model.Posts.find();
       await this.success(res);
     } catch (error) {
       await this.fail(error);
@@ -61,10 +59,9 @@ class HomeController extends HttpController {
       const { id } = ctx.params;
 
       // 2. 查询数据
-      // const res = await ctx.model.Posts.find({
-      //   _id: id,
-      // });
-      const res = await ctx.service.posts.show(id);
+      const res = await ctx.model.Posts.find({
+        _id: id,
+      });
       await this.success(res);
     } catch (error) {
       await this.fail(error);
@@ -82,10 +79,9 @@ class HomeController extends HttpController {
       const { id } = ctx.params;
 
       // 2. 删除
-      // const res = await ctx.model.Posts.remove({
-      //   _id: id,
-      // });
-      const res = await ctx.service.posts.destroy(id);
+      const res = await ctx.model.Posts.remove({
+        _id: id,
+      });
 
       await this.success(res);
     } catch (error) {
@@ -103,15 +99,13 @@ class HomeController extends HttpController {
       const requestBody = ctx.request.body;
 
       // 2. 更新, 需要 1. 查询条件 2. 更新的数据
-      // const res = await ctx.model.Posts.update({
-      //   _id: id,
-      // }, {
-      //   $set: {
-      //     ...requestBody,
-      //   },
-      // });
-
-      const res = await ctx.service.posts.update(id, requestBody);
+      const res = await ctx.model.Posts.update({
+        _id: id,
+      }, {
+        $set: {
+          ...requestBody,
+        },
+      });
 
       await this.success(res);
     } catch (error) {

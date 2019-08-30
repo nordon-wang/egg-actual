@@ -18,6 +18,20 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
+  config.mongoose = {
+    url: 'mongodb://127.0.0.1/blog',
+    options: {},
+    // mongoose global plugins, expected a function or an array of function and options
+    // plugins: [createdPlugin, [updatedPlugin, pluginOptions]],
+  }
+
+
+  config.security = {
+    csrf: {
+      // enable: false,
+    },
+  }
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
